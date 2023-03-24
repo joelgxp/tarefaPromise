@@ -1,6 +1,8 @@
-const btn = document.getElementById("botao")
-const resultado = document.getElementById("div-result")
+const btn = document.getElementById("#botao")
+const resultado = document.getElementById("#div-result")
 const gif = document.createElement("img")
+const acertou = document.createElement("img")
+const errou = document.createElement("img")
 
 function gerarResultado() {
     return new Promise((resolve, reject) => {
@@ -14,23 +16,24 @@ function gerarResultado() {
 }
 
 btn.addEventListener("click", () => {
-    gerarResultado().then()
-.catch
-    gif.src = "./img/confused.gif"
-    resultado.appendChild(gif)
-
 
     setTimeout(() => {
+
+        gif.src = "./img/confused.gif"
+        resultado.appendChild(gif)
+
+        gerarResultado()
+            .then(() => {
+                acertou.src = "./img/acertou.gif"
+                resultado.appendChild(acertou)
+            })
+            .catch(() => {
+                errou.src = "./img/errou.gif"
+                resultado.appendChild(errou)
+            })
+
+
         resultado.removeChild(gif)
-        if (result == true) {
-            acertou.src = "./img/acertou.gif"
-            restultado.appendChild(acertou)
-            console.log("voce ganhou")
-        } else {
-            errou.src = "./img/errou.gif"
-            restultado.appendChild(errou)
-            console.log("voce perdeu")
-        }
 
     }, 3000)
 })
