@@ -1,5 +1,5 @@
-const btn = document.getElementById("#botao")
-const resultado = document.getElementById("#div-result")
+const btn = document.getElementById("botao")
+const resultado = document.getElementById("div-result")
 const gif = document.createElement("img")
 const acertou = document.createElement("img")
 const errou = document.createElement("img")
@@ -15,25 +15,30 @@ function gerarResultado() {
     })
 }
 
-btn.addEventListener("click", () => {
 
-    setTimeout(() => {
+function mostrarResultado() {
 
-        gif.src = "./img/confused.gif"
-        resultado.appendChild(gif)
+    gerarResultado()
+        .then(() => {
+            acertou.src = "./img/acertou.gif"
+            resultado.appendChild(acertou)
+            console.log('acertou')
+        })
+        .catch(() => {
+            errou.src = "./img/errou.gif"
+            resultado.appendChild(errou)
+        })
 
-        gerarResultado()
-            .then(() => {
-                acertou.src = "./img/acertou.gif"
-                resultado.appendChild(acertou)
-            })
-            .catch(() => {
-                errou.src = "./img/errou.gif"
-                resultado.appendChild(errou)
-            })
+        .finally(() => {
+            setTimeout(() => {
+                resultado.removeChild(acertou)
+                resultado.removeChild(errou)
+            }, 3000)
+        })
 
 
-        resultado.removeChild(gif)
 
-    }, 3000)
-})
+}
+
+btn.addEventListener("click", mostrarResultado)
+
